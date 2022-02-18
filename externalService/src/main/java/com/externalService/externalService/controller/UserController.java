@@ -3,6 +3,7 @@ package com.externalService.externalService.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.externalService.externalService.dto.StatusResponse;
@@ -74,7 +76,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(value = "/userGet/{id}")
+	@GetMapping(value = "/userGet/{id}", consumes = "application/json", produces = "application/json")
 	public AppResponse<UserResponseDTO> userGet(@PathVariable Long id) throws BadDataException {
 		UserResponseDTO response = userService.userGetById(id);
 		if (response != null) {
@@ -107,9 +109,16 @@ public class UserController {
 					.build();
 		}
 	}
-	
+	 
 	@GetMapping("/feignService")
 	public String feignService() {
 		return "Hey Ebin, i'm from external service and feign client is working";
+	}
+	
+	@GetMapping("/getById/{id}")
+	public ResponseEntity<UserResponseDTO> getById(@PathVariable Long id) {
+		UserResponseDTO response = userService.userGetById(id);
+		return ResponseEntity.ok(response);
+
 	}
 }
