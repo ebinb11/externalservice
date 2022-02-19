@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_URLS = {
 			"/",
 			"/authenticate**",
+			"/authenticateFeign",
             "/v2/api-docs",
             "rest/docs",
             "/configuration/ui",
